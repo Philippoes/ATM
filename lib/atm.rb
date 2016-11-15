@@ -1,4 +1,5 @@
 require 'byebug'
+require 'date'
 
 class Atm
   attr_accessor :funds
