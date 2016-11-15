@@ -8,7 +8,7 @@ class Atm
   def withdraw(amount, account)
     case
     when insufficient_funds_in_account?(amount, account) then
-      return
+      { status: true, message: 'insufficient funds', date: Date.today }
     else
       perform_transaction(amount, account)
     end
@@ -26,4 +26,3 @@ class Atm
       { status: true, message: 'success', date: Date.today, amount: amount }
     end
   end
-  

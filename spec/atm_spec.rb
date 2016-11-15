@@ -4,7 +4,7 @@ describe Atm do
   let(:account) { instance_double('Account') }
 
   before do
-    allow(account).to receive(:funds).and_return(100)
+    allow(account).to receive(:funds).and_return(150)
     allow(account).to receive (:funds=)
   end
 
@@ -15,6 +15,11 @@ describe Atm do
   it 'should be able to withdraw' do
     subject.withdraw(50, account)
     expect(subject.funds).to eq 950
+  end
+
+  it 'rejects withdrawal if account has insufficient funds' do
+    expected_output = { status: true, message: 'insufficient funds', date: Date.today }
+    expect(subject.withdraw(155, account)).to eq expected_output
   end
 
   it 'will allow withdrawal if account has enough funds' do
