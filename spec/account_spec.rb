@@ -1,7 +1,9 @@
 require './lib/account.rb'
 
 describe Account do
-
+  let(:person) { instance_double('Person', name: 'Philip') }
+  subject { described_class.new({owner: person})}
+  
   it 'should have a 4 digit pin_code' do
     pin_code_length = Math.log10(subject.pin_code).to_i + 1
     expect(pin_code_length).to eq 4
