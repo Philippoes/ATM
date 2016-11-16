@@ -14,4 +14,8 @@ subject { described_class.new(name: 'Philip') }
   it 'is supposed to have a :cash attribute with a value of 0 on initialize' do
     expect(subject.cash).to eq 0
   end
+
+  it 'is expected to have an :account attribute' do
+    expect(subject.account).not_to be nil
+  end
 end
