@@ -10,7 +10,7 @@ class Account
     @funds = 1000
     @pin_code = set_pin_code
     @exp_date = set_exp_date
-    @account_status = :Active
+    @account_status = :active
   end
 
   private

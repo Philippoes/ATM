@@ -8,9 +8,9 @@ class Atm
     @funds = 1000
   end
 
-  def withdraw(amount, pin_code, exp_date, account_status, account)
+  def withdraw(amount, pin_code, account)
     case
-    when account_disabled?(account_status) then
+    when account_disabled?(account.account_status) then
       { status: false, message: 'account disabled', date: Date.today }
     when card_expired?(account.exp_date) then
       { status: false, message: 'card expired', date: Date.today }
@@ -28,7 +28,7 @@ class Atm
   private
 
   def account_disabled?(account_status)
-    account_status != :Active
+    account_status != :active
   end
 
   def card_expired?(exp_date)
