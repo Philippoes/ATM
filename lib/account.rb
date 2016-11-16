@@ -1,9 +1,11 @@
+require 'date'
+
 class Account
   attr_accessor :funds, :account_status
   attr_reader :pin_code, :exp_date
 
   STANDARD_VALIDITY_YRS = 5
-  
+
   def initialize
     @funds = 1000
     @pin_code = set_pin_code
