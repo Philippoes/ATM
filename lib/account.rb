@@ -22,4 +22,5 @@ class Account
   def set_exp_date
     Date.today.next_year(STANDARD_VALIDITY_YRS).strftime('%m/%y')
   end
+  
 end
