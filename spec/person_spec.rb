@@ -1,8 +1,11 @@
 require './lib/person.rb'
 require './lib/atm.rb'
+require './lib/account.rb'
 
 describe Person do
-subject { described_class.new(name: 'Philip') }
+  let(:atm) { Atm.new }
+subject { described_class.new(name: 'Philip', cash: 200) }
+
   it 'is expected to have :name on initialize' do
     expect(subject.name).not_to be nil
   end
@@ -24,4 +27,16 @@ subject { described_class.new(name: 'Philip') }
       expect(subject.account).to be_an_instance_of Account
       expect(subject.account.owner).to be subject
   end
+
+  it 'can manage funds if an account has been created' do
+    subject.create_account
+    #expected_output = { status: true, message: 'successful deposit', date: Date.today, amount: amount, bills: add_bills(amount) }
+    expect(subject.deposit(100, subject.account.pin_code, subject.account, atm)).to be_truthy
+    #expect(subject.deposit(100, subject.account.pin_code, subject.account, atm)).to eq expected_output
+  end
+
+  # it 'rejects deposit if pin is incorrect' do
+  #   endexpected_output = { status: false, message: 'wrong pin', date: Date.today }
+  #   expect(subject.depoist(100, 9999, subject.account, atm)).to eq expected_output
+  # end
 end

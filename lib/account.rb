@@ -28,8 +28,8 @@ class Account
 
   private
 
-  def set_owner(attrs)
-    attrs == nil ? missing_owner : @owner = attrs
+  def set_owner(owner)
+    owner == nil ? missing_owner : @owner = owner
   end
 
   def missing_owner
