@@ -2,11 +2,16 @@ class Person
   attr_accessor :name, :cash, :account
 
   def initialize(attrs = {})
-    @name = attrs[:name]
+    set_name(attrs[:name])
     @cash = 0
-    if @name == nil
-      raise 'A name is required'
-    end
+  end
+
+  def set_name(attrs)
+    attrs == nil ? missing_name : @name = attrs
+  end
+
+  def missing_name
+    raise 'A name is required'
   end
 
   def create_account
