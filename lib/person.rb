@@ -29,6 +29,8 @@ class Person
     end
   end
 
+  private
+
   def perform_deposit(amount, acount, atm)
     @cash -= amount
     account.funds += amount

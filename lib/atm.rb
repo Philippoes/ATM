@@ -10,16 +10,16 @@ class Atm
 
   def withdraw(amount, pin_code, account)
     case
-    when account_disabled?(account) then
-      { status: false, message: 'account disabled', date: Date.today }
+    when account_disabled?(account)
+      generate_error_message('account disabled')
     when card_expired?(account) then
-      { status: false, message: 'card expired', date: Date.today }
+      generate_error_message('card expired')
     when incorrect_pin?(pin_code, account) then
-      { status: false, message: 'wrong pin', date: Date.today }
+      generate_error_message('wrong pin')
     when insufficient_funds_in_account?(amount, account) then
-      { status: false, message: 'insufficient funds', date: Date.today }
+      generate_error_message('insufficient funds')
     when insufficient_funds_in_atm?(amount) then
-      { status: false, message: 'insufficient funds in ATM', date: Date.today }
+      generate_error_message('insufficient funds in ATM')
     else
       perform_transaction(amount, account)
     end
@@ -48,9 +48,21 @@ class Atm
   end
 
   def perform_transaction(amount, account)
-      @funds -= amount
+      deduct_funds_from_atm(amount)
       account.funds -= amount
-      { status: true, message: 'success', date: Date.today, amount: amount, bills: add_bills(amount) }
+      generate_success_message('success', amount)
+  end
+
+  def deduct_funds_from_atm(amount)
+    @funds -= amount
+  end
+
+  def generate_error_message(message)
+    { status: false, message: message, date: Date.today }
+  end
+
+  def generate_success_message(message, amount)
+    { status: true, message: message, date: Date.today, amount: amount, bills: add_bills(amount) }
   end
 
   def add_bills(amount)
