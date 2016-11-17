@@ -34,7 +34,20 @@ class Person
     end
   end
 
+  def withdraw(args = {})
+   account = @account
+   atm = args[:atm]
+   amount = args[:amount]
+   pin = args[:pin]
+   response = atm.withdraw(amount, pin, account)
+   response[:status] == true ? increase_cash(response) : response
+  end
+
   private
+
+  def increase_cash(response)
+    @cash += response[:amount]
+  end
 
   def perform_deposit(amount, acount, atm)
     deduct_cash_from_person(amount)
@@ -49,7 +62,6 @@ class Person
   def add_funds_to_account(amount, account)
     account.funds += amount
   end
-
 
   def generate_error_message(message)
     { status: false, message: message, date: Date.today }

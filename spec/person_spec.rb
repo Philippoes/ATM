@@ -28,7 +28,7 @@ subject { described_class.new(name: 'Philip', cash: 200) }
       expect(subject.account.owner).to be subject
   end
 
-  it 'can manage funds if an account has been created' do
+  it 'funds are added to the account upon deposit' do
     subject.create_account
     expected_output = { status: true, message: 'successful deposit', date: Date.today, amount: 100 }
     expect(subject.deposit(100, subject.account.pin_code, subject.account, atm)).to eq expected_output
@@ -43,5 +43,11 @@ subject { described_class.new(name: 'Philip', cash: 200) }
   it 'can not manage funds if no account has been created' do
     account = nil
     expect{subject.deposit(100, 9999, account, atm)}.to raise_error(RuntimeError, 'No account present')
+  end
+
+  it 'receives cash upon atm wtihdrawal' do
+    subject.create_account
+    command = lambda {subject.withdraw(amount: 100, pin: subject.account.pin_code, account: subject.account, atm: atm) }
+    expect(command.call).to be_truthy
   end
 end
