@@ -39,4 +39,9 @@ subject { described_class.new(name: 'Philip', cash: 200) }
     expected_output = { status: false, message: 'wrong pin', date: Date.today }
     expect(subject.deposit(100, 9999, subject.account, atm)).to eq expected_output
   end
+
+  it 'can not manage funds if no account has been created' do
+    account = nil
+    expect{subject.deposit(100, 9999, account, atm)}.to raise_error(RuntimeError, 'No account present')
+  end
 end

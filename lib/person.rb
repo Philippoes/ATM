@@ -22,10 +22,15 @@ class Person
 
   def deposit(amount, pin_code, account, atm)
     case
-    when incorrect_pin?(pin_code, account) then
-      generate_error_message('wrong pin')
-     else
-      perform_deposit(amount, account, atm)
+    when account_does_not_exist(account)
+      generate_missing_account_error
+    else
+      case
+      when incorrect_pin?(pin_code, account) then
+        generate_error_message('wrong pin')
+      else
+        perform_deposit(amount, account, atm)
+      end
     end
   end
 
@@ -58,4 +63,11 @@ class Person
     pin_code != account.pin_code
   end
 
+  def account_does_not_exist(account)
+    account == nil
+  end
+
+  def generate_missing_account_error
+    raise RuntimeError, 'No account present'
+  end
 end
