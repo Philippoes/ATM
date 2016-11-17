@@ -30,13 +30,13 @@ subject { described_class.new(name: 'Philip', cash: 200) }
 
   it 'can manage funds if an account has been created' do
     subject.create_account
-    #expected_output = { status: true, message: 'successful deposit', date: Date.today, amount: amount, bills: add_bills(amount) }
-    expect(subject.deposit(100, subject.account.pin_code, subject.account, atm)).to be_truthy
-    #expect(subject.deposit(100, subject.account.pin_code, subject.account, atm)).to eq expected_output
+    expected_output = { status: true, message: 'successful deposit', date: Date.today, amount: 100 }
+    expect(subject.deposit(100, subject.account.pin_code, subject.account, atm)).to eq expected_output
   end
 
-  # it 'rejects deposit if pin is incorrect' do
-  #   endexpected_output = { status: false, message: 'wrong pin', date: Date.today }
-  #   expect(subject.depoist(100, 9999, subject.account, atm)).to eq expected_output
-  # end
+  it 'rejects deposit if pin is incorrect' do
+    subject.create_account
+    expected_output = { status: false, message: 'wrong pin', date: Date.today }
+    expect(subject.deposit(100, 9999, subject.account, atm)).to eq expected_output
+  end
 end
