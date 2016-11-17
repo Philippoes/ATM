@@ -19,9 +19,9 @@ subject { described_class.new(name: 'Philip') }
     expect(subject.account).to be nil
   end
 
-  it 'can create an Account of Account Class' do
+  it 'can create an Account of Account Class and be the owner of that account' do
       subject.create_account
       expect(subject.account).to be_an_instance_of Account
+      expect(subject.account.owner).to be subject
   end
-
 end
