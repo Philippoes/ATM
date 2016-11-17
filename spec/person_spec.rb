@@ -47,7 +47,7 @@ subject { described_class.new(name: 'Philip', cash: 200) }
 
   it 'receives cash upon atm wtihdrawal' do
     subject.create_account
-    command = lambda {subject.withdraw(amount: 100, pin: subject.account.pin_code, account: subject.account, atm: atm) }
+    command = lambda {subject.withdraw(100, subject.account.pin_code, subject.account, atm) }
     expect(command.call).to be_truthy
   end
 end

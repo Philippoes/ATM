@@ -34,12 +34,9 @@ class Person
     end
   end
 
-  def withdraw(args = {})
+  def withdraw(amount, pin_code, account, atm)
    account = @account
-   atm = args[:atm]
-   amount = args[:amount]
-   pin = args[:pin]
-   response = atm.withdraw(amount, pin, account)
+   response = atm.withdraw(amount, pin_code, account)
    response[:status] == true ? increase_cash(response) : response
   end
 
