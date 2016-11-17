@@ -16,6 +16,12 @@ subject { described_class.new(name: 'Philip') }
   end
 
   it 'is expected to have an :account attribute' do
-    expect(subject.account).not_to be nil
+    expect(subject.account).to be nil
   end
+
+  it 'can create an Account of Account Class' do
+      subject.create_account
+      expect(subject.account).to be_an_instance_of Account
+  end
+
 end
