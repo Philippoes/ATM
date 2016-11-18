@@ -21,9 +21,14 @@ class Person
   end
 
   def deposit(amount, pin_code, account, atm)
-    account_does_not_exist(account) ? generate_missing_account_error :
-    incorrect_pin?(pin_code, account) ? generate_error_message('wrong pin') :
-    perform_deposit(amount, account, atm)
+    case
+    when account_does_not_exist(account)
+      generate_missing_account_error
+    when incorrect_pin?(pin_code, account)
+      generate_error_message('wrong pin')
+    else
+      perform_deposit(amount, account, atm)
+    end
   end
 
   def withdraw(amount, pin_code, account, atm)
