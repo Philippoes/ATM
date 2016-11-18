@@ -60,5 +60,13 @@ subject { described_class.new(name: 'Philip', cash: 200) }
       command = lambda { subject.withdraw(100, subject.account.pin_code, subject.account, atm)}
       expect { command.call }.to raise_error(RuntimeError, 'An ATM is required')
     end
+
+    it 'funds are added to cash - deducted from account balance' do
+      subject.cash = 100
+      subject.deposit(100, subject.account.pin_code, subject.account, atm)
+      subject.withdraw(100, subject.account.pin_code, subject.account, atm)
+      expect(subject.account.funds).to be 1000
+      expect(subject.cash).to be 100
+    end
   end
 end
