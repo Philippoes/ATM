@@ -23,7 +23,7 @@ class Person
   def deposit(amount, pin_code, account, atm)
     case
     when account_does_not_exist(account)
-      generate_missing_account_error
+      raise_error('No account present')
     when incorrect_pin?(pin_code, account)
       generate_error_message('wrong pin')
     else
@@ -32,11 +32,16 @@ class Person
   end
 
   def withdraw(amount, pin_code, account, atm)
-   response = atm.withdraw(amount, pin_code, account)
-   response[:status] == true ? increase_cash(response) : response
+    atm == nil ?
+    raise_error('An ATM is required') : perform_withdrawal(amount, pin_code, account, atm)
   end
 
   private
+
+  def perform_withdrawal(amount, pin_code, account, atm)
+    response = atm.withdraw(amount, pin_code, account)
+    response[:status] == true ? increase_cash(response) : response
+  end
 
   def increase_cash(response)
     @cash += response[:amount]
@@ -72,7 +77,7 @@ class Person
     account == nil
   end
 
-  def generate_missing_account_error
-    raise RuntimeError, 'No account present'
+  def raise_error (error_message)
+    raise RuntimeError, (error_message)
   end
 end
