@@ -45,21 +45,20 @@ subject { described_class.new(name: 'Philip', cash: 200) }
       expected_output = { status: true, message: 'successful deposit', date: Date.today, amount: 100 }
       expect(subject.deposit(100, subject.account.pin_code, subject.account, atm)).to eq expected_output
     end
-
     it 'rejects deposit if pin is incorrect' do
-    expected_output = { status: false, message: 'wrong pin', date: Date.today }
-    expect(subject.deposit(100, 9999, subject.account, atm)).to eq expected_output
-  end
+      expected_output = { status: false, message: 'wrong pin', date: Date.today }
+      expect(subject.deposit(100, 9999, subject.account, atm)).to eq expected_output
+    end
 
-  it 'receives cash upon atm wtihdrawal' do
-    command = lambda {subject.withdraw(100, subject.account.pin_code, subject.account, atm)}
-    expect(command.call).to be_truthy
-  end
+    it 'receives cash upon atm wtihdrawal' do
+      command = lambda {subject.withdraw(100, subject.account.pin_code, subject.account, atm)}
+      expect(command.call).to be_truthy
+    end
 
-  it 'withdraw is expected to raise error if no ATM is passed in' do
-    atm = nil
-    command = lambda { subject.withdraw(100, subject.account.pin_code, subject.account, atm)}
-    expect { command.call }.to raise_error(RuntimeError, 'An ATM is required')
+    it 'withdraw is expected to raise error if no ATM is passed in' do
+      atm = nil
+      command = lambda { subject.withdraw(100, subject.account.pin_code, subject.account, atm)}
+      expect { command.call }.to raise_error(RuntimeError, 'An ATM is required')
+    end
   end
-end
 end
